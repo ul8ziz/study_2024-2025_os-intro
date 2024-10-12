@@ -1,33 +1,32 @@
 
----
 # Front matter
-lang: ru-RU
-title: "Лабораторная работа №3"
-subtitle: "Дисциплина: Математические основы защиты информации и информационной безопасности"
+lang: ru-RU  
+title: "Лабораторная работа №3"  
+subtitle: "Дисциплина: Математические основы защиты информации и информационной безопасности"  
 author: "Алгайли Абдулазиз Мохаммед"
 
 # Formatting
-toc-title: "Содержание"
-toc: true # Table of contents
-toc_depth: 2
-lof: true # Список рисунков
-lot: true # Список таблиц
-fontsize: 12pt
-linestretch: 1.5
-papersize: a4paper
-documentclass: scrreprt
-polyglossia-lang: russian
-polyglossia-otherlangs: english
-mainfont: PT Serif
-romanfont: PT Serif
-sansfont: PT Sans
-monofont: PT Mono
-mainfontoptions: Ligatures=TeX
-romanfontoptions: Ligatures=TeX
-sansfontoptions: Ligatures=TeX,Scale=MatchLowercase
-monofontoptions: Scale=MatchLowercase
-indent: true
-pdf-engine: lualatex
+toc-title: "Содержание"  
+toc: true  # Table of contents  
+toc_depth: 2  
+lof: true  # Список рисунков  
+lot: true  # Список таблиц  
+fontsize: 12pt  
+linestretch: 1.5  
+papersize: a4paper  
+documentclass: scrreprt  
+polyglossia-lang: russian  
+polyglossia-otherlangs: english  
+mainfont: PT Serif  
+romanfont: PT Serif  
+sansfont: PT Sans  
+monofont: PT Mono  
+mainfontoptions: Ligatures=TeX  
+romanfontoptions: Ligatures=TeX  
+sansfontoptions: Ligatures=TeX,Scale=MatchLowercase  
+monofontoptions: Scale=MatchLowercase  
+indent: true  
+pdf-engine: lualatex  
 header-includes:
   - \linepenalty=10
   - \interlinepenalty=0
@@ -45,6 +44,7 @@ header-includes:
   - \raggedbottom
   - \usepackage{float}
   - \floatplacement{figure}{H}
+
 ---
 
 # Цель работы
@@ -63,7 +63,7 @@ header-includes:
 
 ### Реализация функции шифрования XOR
 
-```julia
+\`\`\`julia
 function xor_encrypt(plaintext::String, key::String)
     if length(key) < length(plaintext)
         error("Key must be as long as or longer than the plaintext.")
@@ -72,45 +72,42 @@ function xor_encrypt(plaintext::String, key::String)
     encrypted = [Char(codepoint(plaintext[i]) ⊻ codepoint(key[i])) for i in 1:length(plaintext)]
     return join(encrypted)
 end
-```
+\`\`\`
 
 ### Тестирование шифрования и расшифровки
 
 #### Шаг 1: Шифрование
 
-**Пример 1:**
+**Пример 1:**  
+Текст для шифрования: `Привет`  
+Ключ для шифрования: `ключ123`
 
-```plaintext
-Текст для шифрования: Привет
-Ключ для шифрования: Ключик
-```
+**Вывод программы:**
 
-```plaintext
-Зашифрованный текст: {vu
-```
+\`\`\`plaintext
+Зашифрованный текст: %ƛvuЄΨ
+\`\`\`
 
-![Результат шифрования](image/imj00.png)
+![Результат генерации ключей LCG](image/imj00.png)
 
 #### Шаг 2: Расшифровка
 
-**Пример 2:**
+**Пример 2:**  
+Зашифрованный текст: `%ƛvuЄΨ`  
+Ключ для расшифровки: `ключ123`
 
-```plaintext
-Зашифрованный текст: {vu
-Ключ для расшифровки: Ключик
-```
+**Вывод программы:**
 
-```plaintext
+\`\`\`plaintext
 Расшифрованный текст: Привет
-```
-
-![Результат расшифровки](image/imj01.png)
+\`\`\`
+![Результат генерации ключей LCG](image/imj01.png)
 
 2) Далее я реализовал генерацию ключей с использованием линейного конгруэнтного генератора (LCG). Для этого была создана функция `lcg`, которая генерирует последовательность псевдослучайных чисел на основе параметров a, b, m и seed.
 
 ### Реализация LCG
 
-```julia
+\`\`\`julia
 function lcg(a, b, m, seed, length)
     random_sequence = Int[]
     yi = seed
@@ -120,17 +117,23 @@ function lcg(a, b, m, seed, length)
     end
     return random_sequence
 end
-```
+\`\`\`
 
 ### Тестирование генерации ключей
 
-**Пример 3:**
+**Пример 3:**  
+Параметры LCG:  
+`a = 5`,  
+`b = 3`,  
+`m = 16`,  
+`seed = 7`,  
+`длина = 6`
 
-```plaintext
-Параметры LCG: a = 5, b = 3, m = 16, seed = 7, длина = 6
-Сгенерированная последовательность: [6, 1, 8, 11, 10, 5]
-```
+**Сгенерированная последовательность:**
 
+\`\`\`plaintext
+[6, 1, 8, 11, 10, 5]
+\`\`\`
 ![Результат генерации ключей LCG](image/imj02.png)
 
 5) Для удобства пользователя был создан интерактивный интерфейс с меню, позволяющим выбрать операцию: шифрование, расшифровка или генерация ключа.

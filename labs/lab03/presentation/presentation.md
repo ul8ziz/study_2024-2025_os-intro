@@ -1,13 +1,14 @@
 
----
 ## Front matter
+
 lang: ru-RU
-title: Шифр гаммирования
+title: Лабораторная работа №3  
 author: Алгайли Абдулазиз Мохаммед
 institute: Российский Университет Дружбы Народов
 date: 12 Октябрь, 2024, Москва, Россия
 
 ## Formatting
+
 mainfont: PT Serif
 romanfont: PT Serif
 sansfont: PT Sans
@@ -15,11 +16,12 @@ monofont: PT Mono
 toc: false
 slide_level: 2
 theme: metropolis
-header-includes: 
- - \metroset{progressbar=frametitle,sectionpage=progressbar,numbering=fraction}
- - '\makeatletter'
- - '\beamer@ignorenonframefalse'
- - '\makeatother'
+header-includes:
+
+- \metroset{progressbar=frametitle,sectionpage=progressbar,numbering=fraction}
+- '\makeatletter'
+- '\beamer@ignorenonframefalse'
+- '\makeatother'
 aspectratio: 43
 section-titles: true
 
@@ -44,7 +46,6 @@ section-titles: true
 ## Алгоритм
 
 ![Шифрование](image/imj00.png){ #fig:001 }
-
 
 ## Формула
 

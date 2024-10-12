@@ -1,39 +1,39 @@
-# Function to convert text to its binary representation (UTF-8 support)
+# Функция для преобразования текста в двоичное представление (поддержка UTF-8)
 function text_to_binary(text::String)
-    return join([string(Int(c), base=2, pad=32) for c in text])  # Increase padding to 32 for UTF-8
+    return join([string(Int(c), base=2, pad=32) for c in text])  # Увеличьте заполнение до 32 для UTF-8
 end
 
-# Function to convert binary to text (UTF-8 support)
+# Функция для преобразования двоичного кода в текст (поддержка UTF-8)
 function binary_to_text(bin::String)
-    chars = [parse(UInt32, b, base=2) for b in Iterators.partition(bin, 32)]  # Use UInt32 for UTF-8
+    chars = [parse(UInt32, b, base=2) for b in Iterators.partition(bin, 32)]  # Используйте UInt32 для UTF-8
     return String(Char.(chars))
 end
 
-# XOR encryption function
+# Функция шифрования XOR
 function xor_encrypt(plaintext::String, key::String)
-    # Convert text and key to binary
+    # Преобразование текста и ключа в двоичный код
     binary_plaintext = text_to_binary(plaintext)
     binary_key = text_to_binary(key)
     
-    # Ensure the key is at least as long as the plaintext
+    # Убедитесь, что ключ не короче текста
     if length(binary_key) < length(binary_plaintext)
-        error("Key should be as long as or longer than the plaintext.")
+        error("Ключ должен быть не короче текста.")
     end
     
-    # XOR the bits of the plaintext and the key
+    # Применение XOR к битам текста и ключа
     encrypted_bits = [parse(Int, binary_plaintext[i]) ⊻ parse(Int, binary_key[i]) for i in 1:length(binary_plaintext)]
     
-    # Join the result and convert it back to a string
+    # Объединение результата и преобразование обратно в строку
     encrypted_binary = join(encrypted_bits)
     return binary_to_text(encrypted_binary)
 end
 
-# XOR decryption function (same as encryption for XOR)
+# Функция расшифровки XOR (аналогична шифрованию)
 function xor_decrypt(ciphertext::String, key::String)
-    return xor_encrypt(ciphertext, key)  # XOR decryption is the same as encryption
+    return xor_encrypt(ciphertext, key)  # Расшифровка XOR такая же, как и шифрование
 end
 
-# Linear Congruential Generator (LCG) function
+# Функция линейного конгруэнтного генератора (LCG)
 function lcg(a, b, m, seed, length)
     random_sequence = Int[]
     yi = seed
@@ -44,61 +44,61 @@ function lcg(a, b, m, seed, length)
     return random_sequence
 end
 
-# Menu for choosing operations
+# Меню для выбора операций
 function menu()
-    println("Choose an operation:")
-    println("1. Encrypt text using XOR")
-    println("2. Decrypt text using XOR")
-    println("3. Generate key using Linear Congruential Generator (LCG)")
-    println("4. Exit")
+    println("Выберите операцию:")
+    println("1. Зашифровать текст с помощью XOR")
+    println("2. Расшифровать текст с помощью XOR")
+    println("3. Сгенерировать ключ с помощью линейного конгруэнтного генератора (LCG)")
+    println("4. Выйти")
     return parse(Int, readline())
 end
 
-# Main program
+# Основная программа
 function main()
     while true
         choice = menu()
 
         if choice == 1
-            println("Enter the plaintext to encrypt:")
+            println("Введите текст для шифрования:")
             plaintext = readline()
-            println("Enter the key (should be as long as or longer than the text):")
+            println("Введите ключ (должен быть не короче текста):")
             key = readline()
             encrypted_text = xor_encrypt(plaintext, key)
-            println("Encrypted text: ", encrypted_text)
+            println("Зашифрованный текст: ", encrypted_text)
 
         elseif choice == 2
-            println("Enter the encrypted text:")
+            println("Введите зашифрованный текст:")
             ciphertext = readline()
-            println("Enter the key used for decryption:")
+            println("Введите ключ для расшифровки:")
             key = readline()
             decrypted_text = xor_decrypt(ciphertext, key)
-            println("Decrypted text: ", decrypted_text)
+            println("Расшифрованный текст: ", decrypted_text)
 
         elseif choice == 3
-            println("Enter LCG parameters:")
-            println("Enter value for a:")
+            println("Введите параметры LCG:")
+            println("Введите значение для a:")
             a = parse(Int, readline())
-            println("Enter value for b:")
+            println("Введите значение для b:")
             b = parse(Int, readline())
-            println("Enter value for m:")
+            println("Введите значение для m:")
             m = parse(Int, readline())
-            println("Enter the seed (initial value):")
+            println("Введите начальное значение (seed):")
             seed = parse(Int, readline())
-            println("Enter the length of the key:")
+            println("Введите длину ключа:")
             length = parse(Int, readline())
             random_sequence = lcg(a, b, m, seed, length)
-            println("Generated key sequence: ", random_sequence)
+            println("Сгенерированная последовательность ключей: ", random_sequence)
 
         elseif choice == 4
-            println("Exiting...")
+            println("Выход...")
             break
 
         else
-            println("Invalid option. Please try again.")
+            println("Неверная опция. Попробуйте еще раз.")
         end
     end
 end
 
-# Run the main program
+# Запуск основной программы
 main()
